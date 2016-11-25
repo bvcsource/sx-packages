@@ -1,0 +1,6 @@
+*.deb
+debian/db
+debian/dists
+debian/pool
+fedora/
+centos/

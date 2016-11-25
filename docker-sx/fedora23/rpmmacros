@@ -1,0 +1,3 @@
+%_topdir /home/makerpm/packages/rpmbuild
+%_smp_mflags  -j9
+%__arch_install_post   /usr/lib/rpm/check-rpaths /usr/lib/rpm/check-buildroot

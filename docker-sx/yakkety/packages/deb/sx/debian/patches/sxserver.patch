@@ -1,0 +1,18 @@
+Redirect /usr/sbin/sxserver commands to systemd unit.
+After sxsetup is run this ensures that sxserver can be controlled with systemd
+
+--- a/server/sxscripts/sbin/sxserver.in	2015-02-13 13:50:32.000000000 +0200
++++ b/server/sxscripts/sbin/sxserver.in	2015-02-13 15:54:09.804283967 +0200
+@@ -13,6 +13,12 @@
+     echo "No permission to read $CONFIG"
+     exit 1
+ fi
++if [ "$1" = "oldstop" ]; then
++ set -- "stop"
++elif [ `id -u` -eq 0 -a -x /bin/systemctl ]; then
++	exec /bin/systemctl "$1" sxserver.service
++fi
++
+ . $CONFIG
+ 
+ if [ -z "$SX_NO_ROOT" -a `id -u` -ne 0 ]; then

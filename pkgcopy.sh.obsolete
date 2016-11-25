@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+SOURCE=sx://indian.skylable.com/vol-packages/experimental/
+DEST=sx://indian.skylable.com/vol-packages/packages
+PACKAGE=skylable-sx
+VERSION=1.0
+
+for el in 5 6 7; do
+    sxcp -r $SOURCE/$PACKAGE*$VERSION-1.el$el*rpm $DEST/$PACKAGE/$VERSION/rhel/$el/
+done
+
+for fc in 20; do
+    sxcp -r $SOURCE/$PACKAGE*$VERSION-1.fc$fc*rpm $DEST/$PACKAGE/$VERSION/fedora/$fc/
+done
+
+sxls -lr $DEST/$PACKAGE/$VERSION
+
+PACKAGE=sx
+
+sxcp -r $SOURCE/$PACKAGE*$VERSION-1*wheezy*deb $DEST/$PACKAGE/$VERSION/debian/wheezy/
+sxcp -r $SOURCE/$PACKAGE*$VERSION-1*wheezy*deb $DEST/$PACKAGE/$VERSION/ubuntu/trusty/
+
+sxcp -r $SOURCE/$PACKAGE*$VERSION-1*precise*deb $DEST/$PACKAGE/$VERSION/ubuntu/precise/
+
+sxls -lr $DEST/$PACKAGE/$VERSION

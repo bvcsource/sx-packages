@@ -1,0 +1,5 @@
+sx (1.2+ds-1) unstable; urgency=low
+
+  * Initial upload (closes: #776850).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sun, 06 Sep 2015 15:04:18 +0200

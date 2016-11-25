@@ -1,0 +1,60 @@
+Source: sx
+Section: web
+Priority: optional
+Maintainer: Skylable Dev Team <dev-team@skylable.com>
+Build-Depends: debhelper, libssl-dev, libyajl-dev, libfcgi-dev,
+    libcurl4-openssl-dev, libltdl-dev,
+    pkg-config (>= 0.9.0),
+    libwww-perl, libjson-xs-perl, libdigest-hmac-perl, liburi-perl,
+    libfuse-dev (>= 2.7.0),
+    dh-systemd (>= 1.5)
+Standards-Version: 3.9.6
+Homepage: http://www.skylable.com/products/sx
+
+Package: sx
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, openssl, logrotate, ca-certificates
+Description: Scalable public and private cloud storage
+ Skylable Sx is a reliable, fully distributed cluster solution for your data
+ storage needs.
+ .
+ With Sx you can aggregate the disk space available on multiple servers and
+ merge it into a single storage system.
+ The cluster makes sure that your data is always replicated over multiple nodes
+ (the exact number of copies is defined by the sysadmin) and synchronized.
+ .
+ Additionally Sx has built-in support for deduplication, client-side
+ encryption, on-the-fly compression and much more.
+
+Package: libsxclient6
+Replaces: libsxclient2, libsxclient3, libsxclient4
+Breaks: libsxclient2, libsxclient3, libsxclient4
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Scalable public and private cloud storage
+ Skylable Sx is a reliable, fully distributed cluster solution for your data 
+ storage needs.
+ .
+ With Sx you can aggregate the disk space available on multiple servers and 
+ merge it into a single storage system.
+ The cluster makes sure that your data is always replicated over multiple nodes
+ (the exact number of copies is defined by the sysadmin) and synchronized.
+ .
+ Additionally Sx has built-in support for deduplication, client-side 
+ encryption, on-the-fly compression and much more.
+
+Package: libsxclient-dev
+Section: libdevel
+Architecture: any
+Depends: libsxclient6 (= ${binary:Version}), ${misc:Depends}
+Description: Scalable public and private cloud storage
+ Skylable Sx is a reliable, fully distributed cluster solution for your data 
+ storage needs.
+ .
+ With Sx you can aggregate the disk space available on multiple servers and 
+ merge it into a single storage system.
+ The cluster makes sure that your data is always replicated over multiple nodes
+ (the exact number of copies is defined by the sysadmin) and synchronized.
+ .
+ Additionally Sx has built-in support for deduplication, client-side 
+ encryption, on-the-fly compression and much more.

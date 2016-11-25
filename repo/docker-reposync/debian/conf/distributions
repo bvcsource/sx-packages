@@ -1,0 +1,47 @@
+Origin: www.skylable.com
+Label: apt repository
+Codename: wheezy
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: jessie
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: precise
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: trusty
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: xenial
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: yakkety
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E

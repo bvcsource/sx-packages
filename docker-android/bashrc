@@ -1,0 +1,5 @@
+export ANDROID_HOME=/usr/local/android-sdk-linux 
+export ANDROID_NDK_HOME=/usr/local/android-ndk-r9b
+export ANT_HOME=/usr/local/apache-ant-1.9.4
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_NDK_HOME:$ANT_HOME/bin
+
