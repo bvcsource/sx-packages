@@ -1,0 +1,314 @@
+
+## <summary>policy for sxserver</summary>
+
+########################################
+## <summary>
+##	Execute TEMPLATE in the sxserver domin.
+## </summary>
+## <param name="domain">
+## <summary>
+##	Domain allowed to transition.
+## </summary>
+## </param>
+#
+interface(`sxserver_domtrans',`
+	gen_require(`
+		type sxserver_t, sxserver_exec_t;
+	')
+
+	corecmd_search_bin($1)
+	domtrans_pattern($1, sxserver_exec_t, sxserver_t)
+')
+########################################
+## <summary>
+##	Read sxserver's log files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`sxserver_read_log',`
+	gen_require(`
+		type sxserver_log_t;
+	')
+
+	logging_search_logs($1)
+	read_files_pattern($1, sxserver_log_t, sxserver_log_t)
+')
+
+########################################
+## <summary>
+##	Append to sxserver log files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_append_log',`
+	gen_require(`
+		type sxserver_log_t;
+	')
+
+	logging_search_logs($1)
+	append_files_pattern($1, sxserver_log_t, sxserver_log_t)
+')
+
+########################################
+## <summary>
+##	Manage sxserver log files
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_manage_log',`
+	gen_require(`
+		type sxserver_log_t;
+	')
+
+	logging_search_logs($1)
+	manage_dirs_pattern($1, sxserver_log_t, sxserver_log_t)
+	manage_files_pattern($1, sxserver_log_t, sxserver_log_t)
+	manage_lnk_files_pattern($1, sxserver_log_t, sxserver_log_t)
+')
+
+########################################
+## <summary>
+##	Do not audit attempts to read,
+##	sxserver tmp files
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain to not audit.
+##	</summary>
+## </param>
+#
+interface(`sxserver_dontaudit_read_tmp_files',`
+	gen_require(`
+		type sxserver_tmp_t;
+	')
+
+	dontaudit $1 sxserver_tmp_t:file read_file_perms;
+')
+
+########################################
+## <summary>
+##	Read sxserver tmp files
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_read_tmp_files',`
+	gen_require(`
+		type sxserver_tmp_t;
+	')
+
+	files_search_tmp($1)
+	read_files_pattern($1, sxserver_tmp_t, sxserver_tmp_t)
+')
+
+########################################
+## <summary>
+##	Manage sxserver tmp files
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_manage_tmp',`
+	gen_require(`
+		type sxserver_tmp_t;
+	')
+
+	files_search_tmp($1)
+	manage_dirs_pattern($1, sxserver_tmp_t, sxserver_tmp_t)
+	manage_files_pattern($1, sxserver_tmp_t, sxserver_tmp_t)
+	manage_lnk_files_pattern($1, sxserver_tmp_t, sxserver_tmp_t)
+')
+
+########################################
+## <summary>
+##	Search sxserver lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_search_lib',`
+	gen_require(`
+		type sxserver_var_lib_t;
+	')
+
+	allow $1 sxserver_var_lib_t:dir search_dir_perms;
+	files_search_var_lib($1)
+')
+
+########################################
+## <summary>
+##	Read sxserver lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_read_lib_files',`
+	gen_require(`
+		type sxserver_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	read_files_pattern($1, sxserver_var_lib_t, sxserver_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage sxserver lib files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_manage_lib_files',`
+	gen_require(`
+		type sxserver_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_files_pattern($1, sxserver_var_lib_t, sxserver_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Manage sxserver lib directories.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_manage_lib_dirs',`
+	gen_require(`
+		type sxserver_var_lib_t;
+	')
+
+	files_search_var_lib($1)
+	manage_dirs_pattern($1, sxserver_var_lib_t, sxserver_var_lib_t)
+')
+
+########################################
+## <summary>
+##	Read sxserver PID files.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+#
+interface(`sxserver_read_pid_files',`
+	gen_require(`
+		type sxserver_var_run_t;
+	')
+
+	files_search_pids($1)
+	read_files_pattern($1, sxserver_var_run_t, sxserver_var_run_t)
+')
+
+########################################
+## <summary>
+##	Execute sxserver server in the sxserver domain.
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed to transition.
+##	</summary>
+## </param>
+#
+interface(`sxserver_systemctl',`
+	gen_require(`
+		type sxserver_t;
+		type sxserver_unit_file_t;
+	')
+
+	systemd_exec_systemctl($1)
+        systemd_read_fifo_file_passwd_run($1)
+	allow $1 sxserver_unit_file_t:file read_file_perms;
+	allow $1 sxserver_unit_file_t:service manage_service_perms;
+
+	ps_process_pattern($1, sxserver_t)
+')
+
+
+########################################
+## <summary>
+##	All of the rules required to administrate
+##	an sxserver environment
+## </summary>
+## <param name="domain">
+##	<summary>
+##	Domain allowed access.
+##	</summary>
+## </param>
+## <param name="role">
+##	<summary>
+##	Role allowed access.
+##	</summary>
+## </param>
+## <rolecap/>
+#
+interface(`sxserver_admin',`
+	gen_require(`
+		type sxserver_t;
+		type sxserver_log_t;
+		type sxserver_tmp_t;
+		type sxserver_var_lib_t;
+		type sxserver_var_run_t;
+	type sxserver_unit_file_t;
+	')
+
+	allow $1 sxserver_t:process { signal_perms };
+	ps_process_pattern($1, sxserver_t)
+
+    tunable_policy(`deny_ptrace',`',`
+        allow $1 sxserver_t:process ptrace;
+    ')
+
+	logging_search_logs($1)
+	admin_pattern($1, sxserver_log_t)
+
+	files_search_tmp($1)
+	admin_pattern($1, sxserver_tmp_t)
+
+	files_search_var_lib($1)
+	admin_pattern($1, sxserver_var_lib_t)
+
+	files_search_pids($1)
+	admin_pattern($1, sxserver_var_run_t)
+
+	sxserver_systemctl($1)
+	admin_pattern($1, sxserver_unit_file_t)
+	allow $1 sxserver_unit_file_t:service all_service_perms;
+	optional_policy(`
+		systemd_passwd_agent_exec($1)
+		systemd_read_fifo_file_passwd_run($1)
+	')
+')

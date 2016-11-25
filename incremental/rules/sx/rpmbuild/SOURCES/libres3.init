@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# libres3 - this init script starts and stops the LibreS3 server
+#
+# chkconfig: 2345 80 20
+# description: Amazon S3 compatible server
+
+### BEGIN INIT INFO
+# Provides: libres3
+# Required-Start: $local_fs $network $remote_fs $time
+# Required-Stop: $local_fs $network $remote_fs $time
+# Default-Stop: 0 1 6
+# Short-Description: start and stop libres3
+# Description: Amazon S3 compatible server
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+exec="/usr/sbin/libres3_ocsigen"
+config="/etc/libres3/libres3.conf"
+[ -e /etc/sysconfig/libres3 ] && . /etc/sysconfig/libres3
+
+lockfile=/var/lock/subsys/libres3
+pidfile=`grep pid.*file /etc/libres3/libres3.conf 2>/dev/null | cut -f2 -d\"`
+
+start() {
+    [ -x $exec ] || exit 5
+    [ -f $config ] || exit 6
+    chown "nobody:nobody" /var/run/libres3
+    action $"Starting libres3: " daemon --pidfile "$pidfile" $exec
+    retval=$?
+    [ $retval -eq 0 ] && touch $lockfile
+    return $retval
+}
+
+stop() {
+    action $"Stopping libres3: " killproc -p "$pidfile" "libres3"
+    retval=$?
+    [ $retval -eq 0 ] && rm -f $lockfile
+    return $retval
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    status -p "$pidfile" libres3
+    retval=$?
+    return $retval
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+
+case "$1" in
+    start)
+        rh_status_q && exit 0
+        $1
+        ;;
+    stop)
+        rh_status_q || exit 0
+        $1
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?

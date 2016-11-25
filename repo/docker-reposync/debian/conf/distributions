@@ -1,0 +1,58 @@
+Origin: www.skylable.com
+Label: apt repository
+Suite: stable
+Codename: wheezy
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Suite: testing
+Codename: jessie
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Suite: unstable
+Codename: sid
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: precise
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: trusty
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: utopic
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E
+
+Origin: www.skylable.com
+Label: apt repository
+Codename: vivid
+Architectures: amd64 i386 source
+Components: main
+Description: Skylable APT repository
+SignWith: 0x5377E192B7BC1D2E

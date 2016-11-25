@@ -1,0 +1,12 @@
+/usr/lib/systemd/system/sx-nginx.service		--	gen_context(system_u:object_r:sxserver_unit_file_t,s0)
+
+/usr/lib/systemd/system/sxserver.service		--	gen_context(system_u:object_r:sxserver_unit_file_t,s0)
+
+/usr/sbin/sx.fcgi		--	gen_context(system_u:object_r:sxserver_exec_t,s0)
+/usr/sbin/sxadm			--	gen_context(system_u:object_r:sxserver_exec_t,s0)
+
+/var/log/sxserver(/.*)?		gen_context(system_u:object_r:sxserver_log_t,s0)
+/var/log/sxserver/sxhttp.*.log		gen_context(system_u:object_r:httpd_log_t,s0)
+
+/var/run/sxserver(/.*)?		gen_context(system_u:object_r:sxserver_var_run_t,s0)
+/var/lib/sxserver/storage(/.*)?	gen_context(system_u:object_r:sxserver_var_lib_t,s0)

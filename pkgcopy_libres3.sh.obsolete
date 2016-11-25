@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+SOURCE=sx://indian.skylable.com/vol-packages/experimental-libres3/
+DEST=sx://indian.skylable.com/vol-packages/packages
+PACKAGE=libres3
+VERSION=0.9
+
+for el in 6 7; do
+    sxcp $SOURCE/$PACKAGE*$VERSION-1.el$el*rpm $DEST/$PACKAGE/$VERSION/rhel/$el/
+done
+
+for fc in 20; do
+    sxcp $SOURCE/$PACKAGE-$VERSION-1.fc$fc*rpm $DEST/$PACKAGE/$VERSION/fedora/$fc/
+done
+
+sxls -lr $DEST/$PACKAGE/$VERSION
+
+PACKAGE=libres3
+
+sxcp $SOURCE/$PACKAGE*$VERSION-1*wheezy*deb $DEST/$PACKAGE/$VERSION/debian/wheezy/
+sxcp $SOURCE/$PACKAGE*$VERSION-1*wheezy*deb $DEST/$PACKAGE/$VERSION/ubuntu/trusty/
+
+sxcp $SOURCE/$PACKAGE*$VERSION-1*precise*deb $DEST/$PACKAGE/$VERSION/ubuntu/precise/
+
+sxls -lr $DEST/$PACKAGE/$VERSION

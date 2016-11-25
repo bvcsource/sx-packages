@@ -1,0 +1,16 @@
+[Unit]
+Description=The SX nginx HTTP server instance
+After=syslog.target network.target remote-fs.target sxserver.service
+PartOf=sxserver.service
+
+[Service]
+Type=forking
+PIDFile=/run/sxserver/sxhttpd.pid
+ExecStartPre=/usr/sbin/nginx -t -c /etc/sxserver/sxhttpd.conf
+ExecStart=/usr/sbin/nginx -c /etc/sxserver/sxhttpd.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

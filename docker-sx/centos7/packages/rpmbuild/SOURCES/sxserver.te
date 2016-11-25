@@ -1,0 +1,94 @@
+policy_module(sxserver, 1.0.0)
+
+########################################
+#
+# Declarations
+#
+
+type sxserver_t;
+type sxserver_exec_t;
+init_daemon_domain(sxserver_t, sxserver_exec_t)
+
+permissive sxserver_t;
+
+type sxserver_log_t;
+logging_log_file(sxserver_log_t)
+
+type sxserver_tmp_t;
+files_tmp_file(sxserver_tmp_t)
+
+type sxserver_var_lib_t;
+files_type(sxserver_var_lib_t)
+
+type sxserver_unit_file_t;
+systemd_unit_file(sxserver_unit_file_t)
+
+########################################
+#
+# sxserver local policy
+#
+allow sxserver_t self:capability { setgid setuid };
+allow sxserver_t self:process { fork setrlimit signal_perms };
+allow sxserver_t self:fifo_file rw_fifo_file_perms;
+allow sxserver_t self:unix_stream_socket create_stream_socket_perms;
+
+manage_dirs_pattern(sxserver_t, sxserver_log_t, sxserver_log_t)
+manage_files_pattern(sxserver_t, sxserver_log_t, sxserver_log_t)
+manage_lnk_files_pattern(sxserver_t, sxserver_log_t, sxserver_log_t)
+logging_log_filetrans(sxserver_t, sxserver_log_t, { dir file lnk_file })
+
+manage_dirs_pattern(sxserver_t, sxserver_tmp_t, sxserver_tmp_t)
+manage_files_pattern(sxserver_t, sxserver_tmp_t, sxserver_tmp_t)
+manage_lnk_files_pattern(sxserver_t, sxserver_tmp_t, sxserver_tmp_t)
+files_tmp_filetrans(sxserver_t, sxserver_tmp_t, { dir file lnk_file })
+
+manage_dirs_pattern(sxserver_t, sxserver_var_lib_t, sxserver_var_lib_t)
+manage_files_pattern(sxserver_t, sxserver_var_lib_t, sxserver_var_lib_t)
+manage_lnk_files_pattern(sxserver_t, sxserver_var_lib_t, sxserver_var_lib_t)
+files_var_lib_filetrans(sxserver_t, sxserver_var_lib_t, { dir file lnk_file })
+rw_files_pattern(sxserver_t, sxserver_var_lib_t, sxserver_var_lib_t)
+
+sysnet_dns_name_resolve(sxserver_t)
+corenet_all_recvfrom_unlabeled(sxserver_t)
+
+allow sxserver_t self:tcp_socket create_stream_socket_perms;
+corenet_tcp_sendrecv_generic_if(sxserver_t)
+corenet_tcp_sendrecv_generic_node(sxserver_t)
+corenet_tcp_sendrecv_all_ports(sxserver_t)
+# default only port 443, but customizable during sxsetup
+corenet_tcp_connect_all_ports(sxserver_t)
+
+domain_use_interactive_fds(sxserver_t)
+
+files_read_etc_files(sxserver_t)
+
+auth_use_nsswitch(sxserver_t)
+
+logging_send_syslog_msg(sxserver_t)
+
+miscfiles_read_localization(sxserver_t)
+
+# customization
+require {
+	type httpd_var_run_t;
+	type httpd_t;
+}
+
+files_search_pids(sxserver_t)
+auth_read_passwd(sxserver_t)
+files_rw_pid_dirs(sxserver_t)
+kernel_read_system_state(sxserver_t)
+dev_read_urand(sxserver_t)
+
+typealias httpd_var_run_t alias sxserver_var_run_t;
+files_pid_filetrans(sxserver_t, sxserver_var_run_t, { dir file lnk_file })
+manage_sock_files_pattern(sxserver_t, sxserver_var_run_t, sxserver_var_run_t)
+manage_files_pattern(sxserver_t, sxserver_var_run_t, sxserver_var_run_t)
+rw_files_pattern(sxserver_t, sxserver_var_run_t, sxserver_var_run_t)
+
+#============= httpd_t ==============
+# allow communication with sxserver
+allow httpd_t sxserver_log_t:dir rw_dir_perms;
+allow httpd_t sxserver_log_t:file rw_file_perms;
+allow httpd_t sxserver_log_t:file create;
+stream_connect_pattern(httpd_t, sxserver_var_run_t, sxserver_var_run_t, sxserver_t)

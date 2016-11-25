@@ -1,0 +1,12 @@
+[Unit]
+Description=Scalable public and private cloud storage server
+After=network.target
+Before=sx-nginx.service
+Requires=sx-nginx.service
+
+[Service]
+Type=forking	
+ExecStart=/usr/sbin/sx.fcgi
+
+[Install]
+WantedBy=multi-user.target

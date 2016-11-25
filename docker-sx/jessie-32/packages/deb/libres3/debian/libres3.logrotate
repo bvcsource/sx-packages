@@ -1,0 +1,14 @@
+/var/log/libres3/access.log /var/log/libres3/errors.log /var/log/libres3/warnings.log /var/log/libres3/info.log {
+        daily
+        missingok
+        rotate 7
+        compress
+	delaycompress
+        notifempty
+	create 0640
+        sharedscripts
+	postrotate
+		[ ! -s /var/run/libres3/libres3.pid ] || kill -USR1 `cat /var/run/libres3/libres3.pid`
+	endscript
+}
+
